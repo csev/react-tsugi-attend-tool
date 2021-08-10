@@ -1,0 +1,17 @@
+.page-header{
+    display: flex;
+    justify-content: space-between;
+}
+.page-header .header-btns Button{
+    margin-right: 5px;
+}
+.pf-c-table{
+margin-top: 10px;
+max-width: 40%;
+}
+.pf-c-table tr > *{
+    padding: 0px;
+}
+.attendance-container{
+    width: 50%;
+}

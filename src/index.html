@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="utf-8">
+  <title>Tsugi React Base</title>
+  <meta id="appName" name="application-name" content="Tsugi React Base">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <base href="/">
+<!-- BEGIN TSUGI -->
+<!-- keep the exact format of the following string - it is used in index.php -->
+<script>var starttsugi = true;
+
+// https://stackoverflow.com/questions/5448545/how-to-retrieve-get-parameters-from-javascript
+function findGetParameter(parameterName) {
+    var result = null,
+    tmp = [];
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
+}
+
+var tsugiGetStr = findGetParameter('_TSUGI');
+var tsugiGet = null;
+try {
+    tsugiGet = JSON.parse(tsugiGetStr)
+} catch (e) {
+    tsugiGet = null;
+}
+
+var tsugiSessionStr = window.sessionStorage.getItem('_TSUGI', null);
+var tsugiSession = null;
+try {
+    tsugiSession = JSON.parse(tsugiSessionStr)
+} catch (e) {
+    tsugiSession = null;
+}
+
+if ( typeof tsugiGet === 'object' && tsugiGet !== null && !Array.isArray(tsugiGet) ) {
+    var _TSUGI = tsugiGet;
+    window.sessionStorage.setItem('_TSUGI', JSON.stringify(_TSUGI));
+} else if ( typeof tsugiSession === 'object' && tsugiSession !== null && !Array.isArray(tsugiSession) ) {
+    var _TSUGI = tsugiSession;
+    console.log("Restored _TSUGI from sessionStorage");
+} else {
+    alert("This tool should be launched through Tsugi or through https://github.com/tsugiproject/nodelauch");
+}
+</script>
+<!-- END TSUGI -->
+</head>
+
+<body>
+  <noscript>Enabling JavaScript is required to run this app.</noscript>
+  <div id="root"></div>
+</body>
+
+</html>
